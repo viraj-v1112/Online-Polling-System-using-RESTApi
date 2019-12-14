@@ -1,0 +1,142 @@
+<html>
+
+	<head>
+
+		<title>Questions List</title>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+    <script>
+		$( document ).ready(function(){
+		
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', "http://localhost:8000/webapi/questions", true);
+				xhr.send();
+				 
+				xhr.onreadystatechange = processRequest;
+				 
+				function processRequest(e) {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						var response = JSON.parse(xhr.responseText);
+						var s="";
+						var count=0;
+						document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\">Number of Questions: <span id=\"number_of_questions\">"+response.length+"</span></p>";
+						for(var i=0;i<response.length;i++)
+						{
+							s=s+i;
+							var question=response[i].question;
+							var option1=response[i].option1;
+							var option2=response[i].option2;
+							var option3=response[i].option3;
+							var option4=response[i].option4;
+							var questionid=response[i].id+"";
+							
+							
+							document.getElementById("print").innerHTML+="<p style=\"font-size:120%;\"><strong>"+"Q"+(i+1)+"."+question+"</strong></p>";
+							var p=document.getElementById("print");
+							var btn=document.createElement('button');
+							btn.innerHTML="Delete";
+							btn.setAttribute("class","login100-delete-btn");
+							btn.setAttribute("id",questionid);
+							btn.setAttribute("onclick","deleteQuestion("+questionid+")");
+							btn.setAttribute("style","float: right; height:25px; width:70px;");
+							p.appendChild(btn);
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\">"+"A. "+option1+"</p>";
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\">"+"B. "+option2+"</p>";
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\">"+"C. "+option3+"</p>";
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\">"+"D. "+option4+"</p>";
+							
+							document.getElementById("print").innerHTML+="<p><br/></p>";
+							s="";
+						}	
+						var p=document.getElementById("print");
+						var button=document.createElement('button');
+						button.innerHTML="Go Back";
+						button.setAttribute("class","login100-form-btn");
+						button.setAttribute("id","back");
+						button.setAttribute("style","float: right;");
+						p.appendChild(button);
+
+						document.getElementById("back").onclick=function() {
+							window.location.href="admin_loggedin.html";
+						}	
+					}
+				}
+			}	
+		)
+	</script>
+	
+
+	
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+	
+<body>
+	<div id="particles-js"></div>
+	<div class="limiter">
+		<div class="container-login100">
+			<div id="print" class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+				<div class="container-login100-form-btn" style="display: inline-block;">
+                
+                </div>
+			</div>
+
+		</div>
+	</div>
+
+		<!-- </div>
+			
+
+		<div class="container-login100-form-btn"> -->
+	<script>
+		function deleteQuestion(id){
+			var resp=confirm("Do you want to continue?");
+			if(resp==true)
+			{
+				$.ajax({
+							url: "http://localhost:8000/webapi/questions/"+id,
+							type: 'DELETE',
+							success: function(result) {
+								// Do something with the result
+								alert("Successfully Deleted.");
+								window.location.href="get.html";
+							}
+					});
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	
+	</script>		
+	
+	<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
+	<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+	<script type="text/javascript" src="js/config.js"></script>
+	
+</body>
+
+</html>

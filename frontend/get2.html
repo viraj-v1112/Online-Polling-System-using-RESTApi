@@ -1,0 +1,196 @@
+<html>
+
+	<head>
+		
+		<title>Questions</title>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+	
+<body>
+	<div id="particles-js"></div>
+
+	<div class="limiter">
+		<div class="container-login100">
+			<div id="print" class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55" style="display: inline-block;">
+				
+			</div>
+				
+		</div>
+	</div>
+
+		<!-- </div>
+			
+
+		<div class="container-login100-form-btn">  -->
+		
+	
+	
+	
+</body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+    <script>
+		$( document ).ready(function(){
+		
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', "http://localhost:8000/webapi/questions", true);
+				xhr.send();
+				 
+				xhr.onreadystatechange = processRequest;
+				 
+				function processRequest(e) {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						var response = JSON.parse(xhr.responseText);
+						var s="";
+						var count=0;
+						var j=0;
+						var id="";
+						
+						document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\">Number of Questions: <span id=\"number_of_questions\">"+response.length+"</span></p>";
+						document.getElementById("print").innerHTML+="<form id=\"myform\">";
+						for(var i=0;i<response.length;i++)
+						{
+							s=s+i;
+							id=id+"x";
+							var question=response[i].question;
+							var option1=response[i].option1;
+							var option2=response[i].option2;
+							var option3=response[i].option3;
+							var option4=response[i].option4;
+							
+
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\">"+"Q"+(i+1)+"</p>";
+
+							document.getElementById("print").innerHTML+="<strong><p style=\"font-size:130%;\" id=\""+id+"\">"+question+"</p></strong>";
+
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\"> <input type=\"radio\" name = \""+i+"\" value=\"1\"/>"+" "+option1+"</p>";
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\"> <input type=\"radio\" name = \""+i+"\" value=\"2\"/>"+" "+option2+"</p>";
+
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\"> <input type=\"radio\" name = \""+i+"\" value=\"3\"/>"+" "+option3+"</p>";
+							document.getElementById("print").innerHTML+="<p style=\"font-size:100%;\"> <input type=\"radio\" name = \""+i+"\" value=\"4\"/>"+" "+option4+"</p>"
+							
+							document.getElementById("print").innerHTML+="<p><br/></p>";
+							s="";
+						}
+						//<button id = \"submit\" value=\"Submit\">Submit</button>
+						//document.getElementById("print").innerHTML+="<button id=\"submit\" type=\"submit\" value=\"Submit\">Submit</button>";
+						// document.getElementById("print").innerHTML+="<button class=\"login100-form-btn\" id = \"submit\" type=\"submit\" value=\"Submit\">Submit</button>"
+						
+						
+						document.getElementById("print").innerHTML+="</form>";
+							
+				
+			
+
+
+  		var p=document.getElementById("print");
+		var button=document.createElement('button');
+		// button.setAttribute("innerHTML","Submit");
+		button.innerHTML="Submit";
+		button.setAttribute("class","login100-form-btn");
+		button.setAttribute("id","submit");
+		button.setAttribute("type","submit");
+		button.setAttribute("value","Submit");
+		button.setAttribute("style","float: right;");
+		
+		p.appendChild(button);
+
+
+		document.getElementById("submit").onclick=function() {
+		
+			var total_number=document.getElementById("number_of_questions").innerHTML;
+			var formData="";
+			var s="";
+			var chosen_option=-1;
+			var jsonStr='{"data":[]}';
+			var id="";
+		
+			for(var i=0 ; i < total_number ; i++)
+			{
+				id=id+"x";
+				var question=document.getElementById(id).innerHTML;
+				var option1=0;
+				var option2=0;
+				var option3=0;
+				var option4=0;
+
+				s=s+i;
+				chosen_option=$("input[type='radio'][name='"+s+"']:checked").val();
+				if (chosen_option == null) {
+					alert("You must answer all questions.");
+					return ;
+				}
+
+				switch(chosen_option)
+				{
+					case '1':option1=1;break;
+					case '2':option2=1;break;
+					case '3':option3=1;break;
+					case '4':option4=1;break;
+					default:console.log("default case");
+				}
+				
+				var new_element=
+				{
+					'question':question,
+					'option1':option1,
+					'option2':option2,
+					'option3':option3,
+					'option4':option4,
+				};
+
+				var obj=JSON.parse(jsonStr);
+				obj['data'].push(new_element);
+				jsonStr=JSON.stringify(obj);
+
+				s="";
+			}
+
+			obj=JSON.parse(jsonStr);
+            $.ajax({
+                url: "http://localhost:8000/webapi/admin",
+                type: "put",
+                contentType:"application/json",
+                dataType: "json",
+                data: JSON.stringify(obj['data']),
+                success: function(d) {
+                    alert("Response recorded successfully.\nThank You.");
+                    window.location.href="index.html";
+                }
+            });
+		};
+		
+			}
+			}	
+			}	
+		)
+	</script>
+	<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
+	<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+	<script type="text/javascript" src="js/config.js"></script>
+
+</html>
