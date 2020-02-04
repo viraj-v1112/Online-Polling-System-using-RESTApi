@@ -1,48 +1,26 @@
 # Online-Polling-System-using-RESTApi
-Online Polling System Websit Made Using Java RestAPI and HTML CSS JS jQuery Ajax
-Snapshots
+Online polling system project using REST API.
 
-1.Page for selecting the login option
+## Landing Page
+<img src="images/Screenshot (25).png">
 
+## Guest Survey Page
+<img src="images/Screenshot (33).png">
 
+## Admin Dashboard
+<img src="images/Screenshot (27).png">
 
-2.Successful Login
+## Adding deleting questions
+<img src="images/Screenshot (30).png">
+<img src="images/Screenshot (28).png">
 
+## Visualisation
+<img src="images/Screenshot (35).png">
 
+<img src="images/Screenshot (36).png">
 
+<img src="images/Screenshot (37).png">
 
+<img src="images/Screenshot (38).png">
 
-3.Unsuccessful Login
-
-
-
-
-
-4.Admin Home Screen
-
-
-
-
-5.View Questions List option
-
-
-
-6.Adding Question
-
-
-
-
-
-
-
-
-
-
-7.Visualizations
-
-
-
-8.Successfully recording response
-
-
-9.Asking to answer all questions
+<img src="images/Screenshot (39).png">
